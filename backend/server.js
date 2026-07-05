@@ -33,7 +33,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 app.use(express.json({ limit: "1mb" }));
 
 app.get("/api/health", (req, res) =>
@@ -51,7 +51,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 8000;
 
 if (process.env.VERCEL) {
-  connectDB();
+  connectDB().catch((err) => console.error("Failed to connect DB:", err));
 } else {
   connectDB().then(() => {
     app.listen(PORT, () =>
