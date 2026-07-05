@@ -50,14 +50,13 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 8000;
 
-if (process.env.VERCEL) {
-  connectDB().catch((err) => console.error("Failed to connect DB:", err));
-} else {
-  connectDB().then(() => {
-    app.listen(PORT, () =>
-      console.log(`Server running on http://localhost:${PORT}`),
-    );
-  });
-}
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 export default app;
