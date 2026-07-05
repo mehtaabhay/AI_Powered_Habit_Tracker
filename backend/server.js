@@ -36,6 +36,16 @@ app.use(cors(corsOptions));
 app.options(/.*/, cors(corsOptions));
 app.use(express.json({ limit: "1mb" }));
 
+// Ensure DB connection is ready before handling any request
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.get("/api/health", (req, res) =>
   res.json({ status: "ok", time: new Date().toISOString() }),
 );
@@ -51,7 +61,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 8000;
 
 if (process.env.VERCEL) {
-  connectDB().catch((err) => console.error("Failed to connect DB:", err));
+  // no-op, connection handled per-request via middleware above
 } else {
   connectDB().then(() => {
     app.listen(PORT, () =>
