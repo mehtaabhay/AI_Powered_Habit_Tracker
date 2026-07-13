@@ -1,1 +1,2 @@
 # AI_Powered_Habit_Tracker
+A full-stack MERN AI Habit Tracker powered by Google Gemini 2.5 Flash, featuring secure user authentication, daily habit management, streak tracking, a 90-day GitHub-style activity heatmap, weekly insights, and five AI-powered features: personalized weekly reports, a habit suggestion wizard, a streak recovery coach, an AI habit assistant, and daily motivational messages. The video provides a complete walkthrough of the application's features, full-stack architecture, development process, and step-by-step AI integration.
